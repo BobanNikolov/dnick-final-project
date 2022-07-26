@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Study buddy</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+            crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+<!-- Navbar-->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid justify-content-between">
+        <!-- Left elements -->
+        <div class="d-flex">
+            <!-- Brand -->
+            <a class="navbar-brand" href=""
+               style="color:#37bb93; font-family: Inter; font-weight: 800; font-size: 36px; font-style: italic">STUDY
+                BUDDY</a>
+
+            <!-- Center elements -->
+            <form class="input-group w-auto my-auto d-none d-sm-flex" method="post">
+                <input
+                        autocomplete="off"
+                        type="search"
+                        class="form-control rounded"
+                        placeholder="Search"
+                        style="min-width: 125px;"
+                />
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">search</button>
+            </form>
+        </div>
+        <!-- Center elements -->
+
+        <!-- Right elements -->
+        <ul class="navbar-nav flex-row">
+            <li class="nav-item me-3 me-lg-1">
+                <a class="navbar-brand" href="{% url 'login' %}"
+                   style="color:#37bb93; font-family: Inter; font-weight: 100; font-size: 40px; font-style: italic">Login</a>
+            </li>
+            <li class="nav-item me-3 me-lg-1">
+                <a class="navbar-brand" href="{% url 'signup' %}"
+                   style="color:#37bb93; font-family: Inter; font-weight: 100; font-size: 40px; font-style: italic">Sign
+                    up</a>
+            </li>
+        </ul>
+        <!-- Right elements -->
+    </div>
+</nav>
+<!-- Navbar -->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-6" style="border:1px solid #ddd">
+            <p style="font-style: italic; font-family: Inter; font-size: 40px; font-weight: 100; text-align: center; position: relative; top: 20%">
+                Get better today. Start studying with Study Buddy and move yourself up the ladder of programming!</p>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-6" style="border:1px solid #ddd">
+            <img src="https://media.istockphoto.com/vectors/cartoon-of-a-man-is-sitting-to-work-from-home-in-front-of-computer-vector-id1219890264?k=20&m=1219890264&s=170667a&w=0&h=Q-B5np5vGA1GsHgwPOeDdhuZA-RKULGLN6_LpCst6Lo="
+                 alt="" class="img-fluid" style="position: relative; left: 15%">
+        </div>
+    </div>
+</div>
+<div class="card-group">
+    <div class="card">
+        <img class="card-img-top"
+             src="https://top10onlinecourses.com/wp-content/uploads/2019/01/Spring-Online-Courses-Training-with-Certification.png"
+             alt="Card image cap">
+    </div>
+    <div class="card">
+        <img class="card-img-top" src="https://ccweb.imgix.net/https%3A%2F%2Fd3f1iyfxxz8i1e.cloudfront.net%2Fcourses%2Fcourse_image%2Faa6da9709190.jpg?ar=16%3A9&auto=format&cs=strip&fit=crop&h=380&ixlib=php-3.3.1&w=535&s=2810bbb7b3e75bfa4f59136f363565db" alt="Card image cap">
+    </div>
+    <div class="card">
+        <img class="card-img-top" src="https://ccweb.imgix.net/https%3A%2F%2Fd3f1iyfxxz8i1e.cloudfront.net%2Fcourses%2Fcourse_image%2Fdd30ab253f9c.jpg?ar=16%3A9&auto=format&cs=strip&fit=crop&h=380&ixlib=php-3.3.1&w=535&s=d4fadbf35a54b2d458adc122b1d8ab7e" alt="Card image cap">
+    </div>
+</div>
+</body>
+</html>
