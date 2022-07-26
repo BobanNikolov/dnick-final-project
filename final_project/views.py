@@ -1,6 +1,7 @@
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 
-from final_project.models import TeacherCourse, Course, Teacher
+from final_project.models import TeacherCourse, Course, Teacher, Student
 
 
 def get_courses(request):
@@ -24,6 +25,22 @@ def login(request):
 
 
 def signup(request):
+    if request.method == "POST":
+        selectedOption = request.POST["signup-select"]
+        username = request.POST["username"]
+        email = request.POST["email"]
+        password = request.POST["password"]
+        name = request.POST["name"]
+        if selectedOption == "teacher":
+            user = User.objects.create_user(username, email, password)
+            user.save()
+            teacher = Teacher.objects.create(user=user, teacher_name=name)
+            teacher.save()
+        elif selectedOption == "student":
+            user = User.objects.create_user(username, email, password)
+            user.save()
+            student = Student.objects.create(user=user, student_name=name)
+            student.save()
     return render(request, "signup.html")
 
 

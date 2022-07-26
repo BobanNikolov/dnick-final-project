@@ -60,23 +60,30 @@
                             <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
 
                                 <form class="mx-1 mx-md-4" method="post">
-
+                                    {% csrf_token %}
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <img src="https://cdn-icons-png.flaticon.com/512/456/456283.png" width="50px">
                                         <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                                         <div class="form-outline flex-fill mb-0">
                                             <input type="text" id="form3Example1c" class="form-control"
-                                                   placeholder="Username"/>
+                                                   placeholder="Username" name="username"/>
                                         </div>
                                     </div>
-
+                                    <div class="d-flex flex-row align-items-center mb-4">
+                                        <img src="https://cdn-icons-png.flaticon.com/512/456/456283.png" width="50px">
+                                        <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                                        <div class="form-outline flex-fill mb-0">
+                                            <input type="text" id="form3Example1c" class="form-control"
+                                                   placeholder="Name" name="name"/>
+                                        </div>
+                                    </div>
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <img src="https://cdn-icons.flaticon.com/png/512/3059/premium/3059410.png?token=exp=1656867786~hmac=df415d22bf8cf9935d5a4c9265ab331f"
                                              width="50px">
                                         <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
                                         <div class="form-outline flex-fill mb-0">
                                             <input type="email" id="form3Example3c" class="form-control"
-                                                   placeholder="email"/>
+                                                   placeholder="Email" name="email"/>
                                         </div>
                                     </div>
 
@@ -86,7 +93,7 @@
                                         <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                                         <div class="form-outline flex-fill mb-0">
                                             <input type="password" id="form3Example4c" class="form-control"
-                                                   placeholder="Password"/>
+                                                   placeholder="Password" name="password"/>
                                         </div>
                                     </div>
 
@@ -100,7 +107,12 @@
                                                    placeholder="Repeat your password"/>
                                         </div>
                                     </div>
-
+                                    <select class="custom-select" name="signup-select"
+                                            style="position: relative; padding: 5px 5px; margin: 5px 5px 15px 100px">
+                                        <option selected>Select your interest</option>
+                                        <option value="teacher">Teacher</option>
+                                        <option value="student">Student</option>
+                                    </select>
                                     <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                                         <button type="submit" class="btn"
                                                 style="background-color: #37BB93; width: 350px; height: 70px; color: white; font-family: Inter; font-size: 40px; font-weight: bold">
@@ -113,9 +125,9 @@
                                 <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                                     <p class="text-start flex-grow-1">Already have an account ?</p>
                                     <a class="btn" href="{% url 'login' %}"
-                                                style="background-color: #37BB93; width: 160px; height: 60px; color: white; font-family: Inter; font-size: 32px; font-weight: bold">
-                                            LOGIN
-                                        </a>
+                                       style="background-color: #37BB93; width: 160px; height: 60px; color: white; font-family: Inter; font-size: 32px; font-weight: bold">
+                                        LOGIN
+                                    </a>
                                 </div>
 
                             </div>
