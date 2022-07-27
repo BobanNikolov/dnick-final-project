@@ -47,11 +47,11 @@ def signup(request):
         if selectedOption == "teacher":
             user = User.objects.create_user(username, email, password)
             Teacher.objects.create(user=user, teacher_name=name)
-            return render(request, "login.html")
+            return redirect("/login")
         elif selectedOption == "student":
             user = User.objects.create_user(username, email, password)
             Student.objects.create(user=user, student_name=name)
-            return render(request, "login.html")
+            return redirect("/login")
     return render(request, "signup.html")
 
 
@@ -60,8 +60,7 @@ def loggedin(request):
 
 
 def teacherIndex(request):
-    user = authenticate(request)
-    if user != None:
+    if request.user.is_authenticated:
         teacher_courses = TeacherCourse.objects.filter(teacher__user__username=request.user.username)
         courses = list()
         for teacher_course in teacher_courses:
@@ -71,8 +70,17 @@ def teacherIndex(request):
     else:
         return redirect(login_app)
 
+
 def studentIndex(request):
-    return render(request, "studentIndex.html")
+    if request.user.is_authenticated:
+        student_courses = StudentCourse.objects.filter(student__user__username=request.user.username)
+        courses = list()
+        for student_course in student_courses:
+            courses.append(student_course.course)
+        context = {"courses": courses}
+        return render(request, "studentIndex.html", context=context)
+    else:
+        return redirect(login_app)
 
 
 def deleteCourse(request, id):
@@ -89,3 +97,10 @@ def enrolled(request, id):
 
 def createNewCourse(request):
     return render(request, "createNewCourse.html")
+
+
+def continueLearning(request, id):
+    return render(request, "continueLearning.html")
+
+def chooseNewCourse(request):
+    return render(request, "chooseNewCourse.html")

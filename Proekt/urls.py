@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path
 
 from final_project.views import index, signup, loggedin, studentIndex, teacherIndex, deleteCourse, \
-    createNewCourse, enrolled, login_app, logout_app
+    createNewCourse, enrolled, login_app, logout_app, continueLearning, chooseNewCourse
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,5 +30,7 @@ urlpatterns = [
     path('delete-item/<int:id>/', deleteCourse, name="delete-item"),
     path('createNewCourse/', createNewCourse, name="createNewCourse"),
     path('enrolled/<int:id>/', enrolled, name="enrolled"),
-    path('logout/', logout_app, name="logout")
+    path('continue_learning/<int:id>', continueLearning, name="continue_learning"),
+    path('logout/', logout_app, name="logout"),
+    path('chooseNewCourse/', chooseNewCourse, name="chooseNewCourse"),
 ]
