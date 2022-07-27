@@ -16,18 +16,19 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from final_project.views import index, login, signup, loggedin, studentIndex, teacherIndex, deleteCourse, \
-    createNewCourse, enrolled
+from final_project.views import index, signup, loggedin, studentIndex, teacherIndex, deleteCourse, \
+    createNewCourse, enrolled, login_app, logout_app
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('index/', index, name="index"),
-    path('login/', login, name="login"),
+    path('login/', login_app, name="login_app"),
     path('signup/', signup, name="signup"),
     path('loggedin/', loggedin, name="loggedin"),
     path('studentIndex/', studentIndex, name="studentIndex"),
     path('teacherIndex/', teacherIndex, name="teacherIndex"),
     path('delete-item/<int:id>/', deleteCourse, name="delete-item"),
     path('createNewCourse/', createNewCourse, name="createNewCourse"),
-    path('enrolled/', enrolled, name="enrolled"),
+    path('enrolled/<int:id>/', enrolled, name="enrolled"),
+    path('logout/', logout_app, name="logout")
 ]

@@ -1,17 +1,8 @@
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 
-from final_project.models import TeacherCourse, Course, Teacher, Student
-
-
-def get_courses(request):
-    currentTeacher = Teacher.objects.get(user__username=request.user.username)
-    courses = []
-    for course in TeacherCourse.objects.all():
-        if course.teacher.id == currentTeacher.id:
-            courses.append(course.id)
-    qs = Course.objects.filter(id__in=courses)
-    return qs
+from final_project.models import TeacherCourse, Course, Teacher, Student, StudentCourse
 
 
 # Create your views here.
@@ -20,8 +11,30 @@ def index(request):
     return render(request, "index.html")
 
 
-def login(request):
+def login_app(request):
+    if request.method == "POST":
+        username = request.POST["username"]
+        password = request.POST["password"]
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            try:
+                teacher = Teacher.objects.get(user__username=username)
+                if teacher is not None:
+                    login(request, user)
+                    return redirect("/teacherIndex")
+            except:
+                student = Student.objects.get(user__username=username)
+                if student is not None:
+                    login(request, user)
+                    return redirect("/studentIndex")
     return render(request, "login.html")
+
+
+def logout_app(request):
+    username = User.objects.get(username=request.user.username)
+    if username != None:
+        logout(request)
+        return redirect(login_app)
 
 
 def signup(request):
@@ -33,14 +46,12 @@ def signup(request):
         name = request.POST["name"]
         if selectedOption == "teacher":
             user = User.objects.create_user(username, email, password)
-            user.save()
-            teacher = Teacher.objects.create(user=user, teacher_name=name)
-            teacher.save()
+            Teacher.objects.create(user=user, teacher_name=name)
+            return render(request, "login.html")
         elif selectedOption == "student":
             user = User.objects.create_user(username, email, password)
-            user.save()
-            student = Student.objects.create(user=user, student_name=name)
-            student.save()
+            Student.objects.create(user=user, student_name=name)
+            return render(request, "login.html")
     return render(request, "signup.html")
 
 
@@ -49,10 +60,16 @@ def loggedin(request):
 
 
 def teacherIndex(request):
-    courses = get_courses(request)
-    context = {"courses": courses}
-    return render(request, "teacherIndex.html", context=context)
-
+    user = authenticate(request)
+    if user != None:
+        teacher_courses = TeacherCourse.objects.filter(teacher__user__username=request.user.username)
+        courses = list()
+        for teacher_course in teacher_courses:
+            courses.append(teacher_course.course)
+        context = {"courses": courses}
+        return render(request, "teacherIndex.html", context=context)
+    else:
+        return redirect(login_app)
 
 def studentIndex(request):
     return render(request, "studentIndex.html")
@@ -64,8 +81,10 @@ def deleteCourse(request, id):
     return redirect('teacherIndex')
 
 
-def enrolled(request):
-    return render(request, "enrolled.html")
+def enrolled(request, id):
+    students = StudentCourse.objects.filter(course__id=id)
+    context = {"students": students}
+    return render(request, "enrolled.html", context=context)
 
 
 def createNewCourse(request):
