@@ -102,5 +102,17 @@ def createNewCourse(request):
 def continueLearning(request, id):
     return render(request, "continueLearning.html")
 
+
 def chooseNewCourse(request):
-    return render(request, "chooseNewCourse.html")
+    studentCoursesBelongingToStudent = StudentCourse.objects.filter(student__user__username=request.user.username)
+    allCourses = Course.objects.all()
+    coursesBelongingToStudent = list()
+    for s in studentCoursesBelongingToStudent:
+        coursesBelongingToStudent.append(s.course)
+    coursesNotBelongingToStudent = list()
+    for c in allCourses:
+        if c not in coursesBelongingToStudent:
+            coursesNotBelongingToStudent.append(c)
+    context = {"courses": coursesNotBelongingToStudent}
+
+    return render(request, "chooseNewCourse.html", context=context)
