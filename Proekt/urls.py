@@ -16,8 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from final_project.views import index, signup, loggedin, studentIndex, teacherIndex, deleteCourse, \
-    createNewCourse, enrolled, login_app, logout_app, continueLearning, chooseNewCourse
+from final_project.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -33,4 +32,7 @@ urlpatterns = [
     path('continue_learning/<int:id>', continueLearning, name="continue_learning"),
     path('logout/', logout_app, name="logout"),
     path('chooseNewCourse/', chooseNewCourse, name="chooseNewCourse"),
+    path('enroll/<int:id>', enroll, name="enroll"),
+    path('shoppingCart/', shoppingCart, name="shoppingCart"),
+    path('delete-course/<int:id>/', deleteCourseAsStudent, name="delete-course"),
 ]

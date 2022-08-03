@@ -46,3 +46,14 @@ class TeacherCourse(models.Model):
 class StudentCourse(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
+
+
+class ShoppingCart(models.Model):
+    id = models.IntegerField(null=False, blank=False, primary_key=True)
+    student = models.ForeignKey(Student, on_delete=models.SET_NULL, null=True, blank=True)
+    total_price = models.IntegerField(null=True, blank=True)
+
+
+class ShoppingCartCourse(models.Model):
+    shopping_cart = models.ForeignKey(ShoppingCart, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True, blank=True)

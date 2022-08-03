@@ -1,5 +1,6 @@
 from django.contrib import admin
-from final_project.models import CourseChapter, TeacherCourse, StudentCourse, Chapter, Course, Teacher, Student
+from final_project.models import CourseChapter, TeacherCourse, StudentCourse, Chapter, Course, Teacher, Student, \
+    ShoppingCartCourse, ShoppingCart
 
 
 # Register your models here.
@@ -24,6 +25,15 @@ class StudentCourseAdmin(admin.StackedInline):
     extra = 0
 
 
+class ShoppingCartCourseAdmin(admin.StackedInline):
+    model = ShoppingCartCourse
+    extra = 0
+
+
+class ShoppingCartAdmin(admin.ModelAdmin):
+    inlines = [ShoppingCartCourseAdmin]
+
+
 class CourseAdmin(admin.ModelAdmin):
     inlines = [CourseChapterAdmin]
 
@@ -40,3 +50,4 @@ admin.site.register(Chapter)
 admin.site.register(Course, CourseAdmin)
 admin.site.register(Teacher, TeacherAdmin)
 admin.site.register(Student, StudentAdmin)
+admin.site.register(ShoppingCart, ShoppingCartAdmin)

@@ -2,7 +2,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 
-from final_project.models import TeacherCourse, Course, Teacher, Student, StudentCourse
+from final_project.models import TeacherCourse, Course, Teacher, Student, StudentCourse, ShoppingCart, \
+    ShoppingCartCourse
 
 
 # Create your views here.
@@ -65,7 +66,8 @@ def teacherIndex(request):
         courses = list()
         for teacher_course in teacher_courses:
             courses.append(teacher_course.course)
-        context = {"courses": courses}
+        emptyList = list()
+        context = {"courses": courses, "emptyList": emptyList}
         return render(request, "teacherIndex.html", context=context)
     else:
         return redirect(login_app)
@@ -77,7 +79,8 @@ def studentIndex(request):
         courses = list()
         for student_course in student_courses:
             courses.append(student_course.course)
-        context = {"courses": courses}
+        emptyList = list()
+        context = {"courses": courses, "emptyList": emptyList}
         return render(request, "studentIndex.html", context=context)
     else:
         return redirect(login_app)
@@ -87,6 +90,13 @@ def deleteCourse(request, id):
     course = Course.objects.get(id=id)
     course.delete()
     return redirect('teacherIndex')
+
+
+def deleteCourseAsStudent(request, id):
+    course = ShoppingCartCourse.objects.filter(shopping_cart__student__user__username=request.user.username)\
+        .filter(course__id=id)
+    course.delete()
+    return redirect('shoppingCart')
 
 
 def enrolled(request, id):
@@ -113,6 +123,40 @@ def chooseNewCourse(request):
     for c in allCourses:
         if c not in coursesBelongingToStudent:
             coursesNotBelongingToStudent.append(c)
-    context = {"courses": coursesNotBelongingToStudent}
+    emptyList = list()
+    shoppingCart = ShoppingCartCourse.objects.filter(shopping_cart__student__user__username=request.user.username)
+    coursesInShoppingCart = list()
+    for c in shoppingCart:
+        coursesInShoppingCart.append(c.course)
+    context = {"courses": coursesNotBelongingToStudent, "emptyList": emptyList,
+               "coursesInShoppingCart": coursesInShoppingCart}
 
     return render(request, "chooseNewCourse.html", context=context)
+
+
+def enroll(request, id):
+    course = Course.objects.get(id=id)
+    student = Student.objects.get(user__username=request.user.username)
+    shoppingCart = ShoppingCart.objects.filter(student=student).exists()
+    if shoppingCart is False:
+        ShoppingCart.objects.create(student=student)
+    shoppingCart = ShoppingCart.objects.get(student=student)
+    ShoppingCartCourse.objects.create(shopping_cart=shoppingCart, course=course)
+    return redirect('chooseNewCourse')
+
+
+def shoppingCart(request):
+    if request.method == "POST":
+        shoppingCart = ShoppingCartCourse.objects.filter(shopping_cart__student__user__username=request.user.username)
+        student = Student.objects.get(user__username=request.user.username)
+        for c in shoppingCart:
+            StudentCourse.objects.create(student=student, course=c.course)
+        ShoppingCart.objects.filter(student__user__username=request.user.username).delete()
+        return redirect('studentIndex')
+    shoppingCart = ShoppingCartCourse.objects.filter(shopping_cart__student__user__username=request.user.username)
+    coursesInShoppingCart = list()
+    for c in shoppingCart:
+        coursesInShoppingCart.append(c.course)
+    emptyList = list()
+    context = {"emptyList": emptyList, "coursesInShoppingCart": coursesInShoppingCart}
+    return render(request, "shoppingCart.html", context=context)

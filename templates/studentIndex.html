@@ -62,7 +62,7 @@
     </div>
 </nav>
 <!-- Navbar -->
-{% if courses.count != 0 %}
+{% if courses != emptyList %}
     <p style="font-family: Inter; font-weight: 100; font-size: 40px; font-style: italic; padding: 50px 50px; position: relative; left: 30%">
         Hey, here are your courses!
     </p>
@@ -99,7 +99,7 @@
     <a class="btn btn-lg" style="color: white; background: #37BB93; width: 300px;position:relative; left: 40%"
        href="{% url 'chooseNewCourse' %}">CHOOSE NEW COURSE</a>
 {% endif %}
-{% if courses.count == 0 %}
+{% if courses == emptyList %}
     <p style="font-family: Inter; font-weight: 100; font-size: 40px; font-style: italic; padding: 50px 50px; position: relative; left: 25%">
         You have no courses to listen, choose one!
     </p>
