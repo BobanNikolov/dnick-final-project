@@ -93,15 +93,20 @@ def deleteCourse(request, id):
 
 
 def deleteCourseAsStudent(request, id):
-    course = ShoppingCartCourse.objects.filter(shopping_cart__student__user__username=request.user.username)\
+    course = ShoppingCartCourse.objects.filter(shopping_cart__student__user__username=request.user.username) \
         .filter(course__id=id)
     course.delete()
     return redirect('shoppingCart')
 
 
 def enrolled(request, id):
-    students = StudentCourse.objects.filter(course__id=id)
-    context = {"students": students}
+    studentCourses = StudentCourse.objects.filter(course__id=id)
+    totalMade = 0
+    totalStudents = studentCourses.count()
+    course = Course.objects.get(id=id)
+    for s in studentCourses:
+        totalMade += course.cost
+    context = {"totalStudents": totalStudents, "course": course, "totalMade": totalMade}
     return render(request, "enrolled.html", context=context)
 
 

@@ -20,7 +20,7 @@ from final_project.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('index/', index, name="index"),
+    path('', index, name="index"),
     path('login/', login_app, name="login_app"),
     path('signup/', signup, name="signup"),
     path('loggedin/', loggedin, name="loggedin"),
