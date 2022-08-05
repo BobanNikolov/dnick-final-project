@@ -56,10 +56,6 @@ def signup(request):
     return render(request, "signup.html")
 
 
-def loggedin(request):
-    return render(request, "loggedin.html")
-
-
 def teacherIndex(request):
     if request.user.is_authenticated:
         teacher_courses = TeacherCourse.objects.filter(teacher__user__username=request.user.username)
@@ -111,6 +107,19 @@ def enrolled(request, id):
 
 
 def createNewCourse(request):
+    if request.method == "POST":
+        title = request.POST["title"]
+        rating = request.POST["rating"]
+        description = request.POST["description"]
+        cost = request.POST["cost"]
+        thumbnail = request.POST["thumbnail"]
+        video = request.POST["video"]
+        test = request.POST["test"]
+        Course.objects.create(title=title, rating=rating, description=description, cost=cost, thumbnail=thumbnail, course_video=video, course_test=test)
+        course = Course.objects.filter(title=title).first()
+        teacher = Teacher.objects.get(user__username=request.user.username)
+        TeacherCourse.objects.create(teacher=teacher, course=course)
+        return redirect("teacherIndex")
     return render(request, "createNewCourse.html")
 
 

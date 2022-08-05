@@ -23,7 +23,6 @@ urlpatterns = [
     path('', index, name="index"),
     path('login/', login_app, name="login_app"),
     path('signup/', signup, name="signup"),
-    path('loggedin/', loggedin, name="loggedin"),
     path('studentIndex/', studentIndex, name="studentIndex"),
     path('teacherIndex/', teacherIndex, name="teacherIndex"),
     path('delete-item/<int:id>/', deleteCourse, name="delete-item"),
