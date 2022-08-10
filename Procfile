@@ -1,1 +1,1 @@
-web: gunicorn dnick-final-project.wsgi
+web: gunicorn Proekt.wsgi
