@@ -31,7 +31,7 @@
         <!-- Left elements -->
         <div class="d-flex">
             <!-- Brand -->
-            <a class="navbar-brand" href="{% url 'index' %}"
+            <a class="navbar-brand" href="{% url 'studentIndex' %}"
                style="color:#37bb93; font-family: Inter; font-weight: 800; font-size: 36px; font-style: italic">STUDY
                 BUDDY</a>
 
@@ -76,7 +76,10 @@
         <!-- Right elements -->
     </div>
 </nav>
-
+<a style="position:absolute; left: 5%; top: 20%" href="{% url 'chooseNewCourse' %}">
+                        <img src="https://cdn-icons-png.flaticon.com/512/189/189254.png" width="70" height="75"
+                             alt="Back">
+                    </a>
 {% if coursesInShoppingCart != emptyList %}
     <p style="font-family: Inter; font-weight: 100; font-size: 40px; font-style: italic; padding: 50px 50px; position: relative; left: 22%">
         Hey, you have new courses in your shopping cart!
