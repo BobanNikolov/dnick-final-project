@@ -24,7 +24,12 @@ SECRET_KEY = 'django-insecure-2o_jilzwn@#=_8a@279nk4@bv0g2eo=-&r^4r(o2r+^8ti$8iv
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+IS_HEROKU = "DYNO" in os.environ
+
+if IS_HEROKU:
+    ALLOWED_HOSTS = ["*"]
+else:
+    ALLOWED_HOSTS = []
 
 # Application definition
 
